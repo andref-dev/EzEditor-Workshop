@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Net;
 using UnityEngine;
 
 public class TerrainController : MonoBehaviour
@@ -9,7 +10,11 @@ public class TerrainController : MonoBehaviour
 
 	[Header("Tiles Settings")]
 	public GameObject TilePrefab;
+	
+	[HideInInspector]
 	public List<TileOption> TileOptions = new List<TileOption>();
+	
+	
 	public Transform TilesParent;
 	
 	[Header("Coins Settings")]
@@ -17,6 +22,7 @@ public class TerrainController : MonoBehaviour
 	public Transform CoinParent;
 	public int CoinAmount;
 
+	[ContextMenu("Create Terrain")]
 	public void CreateTerrain()
 	{
 		ClearParent(TilesParent);
@@ -31,6 +37,7 @@ public class TerrainController : MonoBehaviour
 		}
 	}
 
+	[ContextMenu("Create Coins")]
 	public void CreateCoins()
 	{
 		ClearParent(CoinParent);
@@ -43,6 +50,21 @@ public class TerrainController : MonoBehaviour
 				CoinParent
 			);
 		}
+	}
+
+	[ContextMenu("Clear Level")]
+	public void ClearLevel()
+	{
+		ClearParent(TilesParent);
+		ClearParent(CoinParent);
+	}
+
+
+	[ContextMenu("Coin Counter")]
+	public void CoinCounter()
+	{
+		var res = GetComponentsInChildren<CoinController>();
+		CoinAmount = res.Length;
 	}
 	
 	public void ClearParent(Transform parent)
@@ -68,6 +90,7 @@ public class TerrainController : MonoBehaviour
 [System.Serializable]
 public class TileOption
 {
+	public string Name;
 	public Sprite Sprite;
 	public int Weight;
 }
